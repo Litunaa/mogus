@@ -1,0 +1,27 @@
+    public static boolean isPrime(int num){ // Checks if a number is prime
+        if (num < 2){                  // Checks if the given number is 1 or less (Therefore not prime)
+            return false;
+        }
+
+        if (num == 2 || num == 3){        // Eliminates the only prime numbers that doesn't follow the (6k +- 1) formula  
+            return true;
+        }
+
+        if (num % 6 != 1 && num % 6 != 5){                                                                                                                                                                         
+            return false;                           // All prime numbers other than 2 and 3 can be written as (6k +- 1) where k is a positive integer          
+        }                                           // (6k +- 1) gives two potential prime numbers, which eliminates unnecessary numbers to check                                                                                        
+                                                    // Therefore num % 6 != 1  && num % 6 != 5 checks if a number follows the rule (6k +- 1 )
+                                                    
+        double div = Math.sqrt(num);                // Only numbers up to the sqrt(n) are neccessary to check since a composite (non prime) is always re-writeable as a*b 
+                                                    // Therefore a or b has to be lower than the sqrt(n) and we will therefore find a factor less than  or equal to sqrt(n) if it is not prime
+                                                    
+        for (int curr = 5; curr <= div; curr+=6){    // Using the (6k +- 1) formula we can easily check if a number is divisible by a prime number (makes it composite)
+            int firstPrime = curr;                        // Every composite (non-prime) can be factored into a prime number (firstPrime or secondPrime)
+            int secondPrime = curr + 2; 
+
+            if (num % firstPrime == 0 || num % secondPrime == 0){      // If we find a divisor, the number wont be prime
+                return false;
+            }
+        }
+        return true;       // Returns true if we never found a divisor (Therefore prime) 
+    }   
